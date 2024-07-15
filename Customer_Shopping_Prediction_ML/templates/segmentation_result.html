@@ -1,0 +1,27 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jul  1 18:19:19 2024
+
+@author: madha
+"""
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Segmentation Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Segmentation Result</h1>
+        <h2>Segmented Customer Data</h2>
+        {% if table %}
+            {{ table | safe }}
+        {% endif %}
+        <h2>Segmentation Plot</h2>
+        {% if plot_image %}
+            <img src="{{ url_for('static', filename=plot_image) }}" alt="Segmentation Plot">
+        {% endif %}
+    </div>
+</body>
+</html>

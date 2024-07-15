@@ -1,0 +1,79 @@
+# Example of generating HTML report
+html_content = '''
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Segmentation Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .cluster {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .cluster h2 {
+            color: #555;
+        }
+        .cluster table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .cluster th, .cluster td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .cluster th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Segmentation Report</h1>
+'''
+
+# Add cluster-wise analysis to HTML
+for cluster_id, cluster_data in data.groupby('Cluster'):
+    html_content += f'''
+    <div class="cluster">
+        <h2>Cluster {cluster_id}</h2>
+        <table>
+            <tr>
+                <th>Customer ID</th>
+                <th>Feature 1</th>
+                <th>Feature 2</th>
+                <!-- Add more columns as needed -->
+            </tr>
+    '''
+    for index, row in cluster_data.iterrows():
+        html_content += f'''
+            <tr>
+                <td>{row['Customer ID']}</td>
+                <td>{row['Feature1']}</td>
+                <td>{row['Feature2']}</td>
+                <!-- Add more columns as needed -->
+            </tr>
+        '''
+    html_content += '''
+        </table>
+    </div>
+    '''
+
+# Close the HTML document
+html_content += '''
+</body>
+</html>
+'''
+
+# Save HTML content to a file
+with open('customer_segmentation_report.html', 'w') as file:
+    file.write(html_content)
+
+print('HTML report generated successfully!')

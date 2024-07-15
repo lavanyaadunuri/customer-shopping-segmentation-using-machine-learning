@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Segmentation Prediction</title>
+</head>
+<body>
+    <h1>Customer Segmentation Prediction</h1>
+    <form id="prediction-form">
+        <label for="customer_gender">Gender:</label>
+        <input type="text" id="customer_gender" name="customer_gender"><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age"><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price"><br>
+        <label for="payment_method">Payment Method:</label>
+        <input type="text" id="payment_method" name="payment_method"><br>
+        <label for="shopping_mall">Shopping Mall:</label>
+        <input type="text" id="shopping_mall" name="shopping_mall"><br>
+        <input type="submit" value="Predict">
+    </form>
+    <p id="prediction-result"></p>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+            
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('prediction-result').innerText = `Predicted Category: ${result.predicted_category}`;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
